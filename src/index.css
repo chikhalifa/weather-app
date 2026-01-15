@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800;9..144,900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans antialiased overflow-x-hidden transition-colors duration-700;
+  }
+  
+  body.dark {
+    @apply bg-gradient-to-br from-storm-900 via-atmosphere-900 to-storm-800 text-white;
+  }
+  
+  body:not(.dark) {
+    @apply bg-gradient-to-br from-atmosphere-50 via-white to-sunset-50 text-storm-900;
+  }
+  
+  /* Pointer cursor for interactive elements */
+  a, button, [role="button"], input[type="button"], input[type="submit"], .cursor-pointer, [onclick] {
+    cursor: pointer;
+  }
+}
+
+@layer utilities {
+  .glass-effect {
+    @apply backdrop-blur-2xl bg-white/10 dark:bg-white/5 border border-white/20 shadow-2xl;
+  }
+  
+  .glass-effect-light {
+    @apply backdrop-blur-2xl bg-white/40 dark:bg-black/20 border border-white/30 dark:border-white/10 shadow-xl;
+  }
+}
+
+/* Hide scrollbar */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
