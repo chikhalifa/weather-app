@@ -8,28 +8,34 @@
   body {
     @apply font-sans antialiased overflow-x-hidden transition-colors duration-700;
   }
-  
+
   body.dark {
-    @apply bg-gradient-to-br from-storm-900 via-atmosphere-900 to-storm-800 text-white;
+    @apply bg-gradient-to-br from-gray-900 via-slate-900 to-gray-950 text-gray-100;
   }
-  
+
   body:not(.dark) {
-    @apply bg-gradient-to-br from-atmosphere-50 via-white to-sunset-50 text-storm-900;
+    @apply bg-gradient-to-br from-gray-50 via-slate-50 to-gray-100 text-gray-800;
   }
-  
+
   /* Pointer cursor for interactive elements */
-  a, button, [role="button"], input[type="button"], input[type="submit"], .cursor-pointer, [onclick] {
+  a,
+  button,
+  [role="button"],
+  input[type="button"],
+  input[type="submit"],
+  .cursor-pointer,
+  [onclick] {
     cursor: pointer;
   }
 }
 
 @layer utilities {
   .glass-effect {
-    @apply backdrop-blur-2xl bg-white/10 dark:bg-white/5 border border-white/20 shadow-2xl;
+    @apply backdrop-blur-xl bg-white/8 dark:bg-white/3 border border-white/15 shadow-lg;
   }
-  
+
   .glass-effect-light {
-    @apply backdrop-blur-2xl bg-white/40 dark:bg-black/20 border border-white/30 dark:border-white/10 shadow-xl;
+    @apply backdrop-blur-xl bg-white/30 dark:bg-black/15 border border-white/20 dark:border-white/8 shadow-md;
   }
 }
 
