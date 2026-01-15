@@ -17,11 +17,11 @@ const WeatherEffects = ({ weatherCode }) => {
             // eslint-disable-next-line react-hooks/set-state-in-effect
             setDrops(current => {
                 if (current.length > 0) return current;
-                return Array.from({ length: 50 }).map((_, i) => ({
+                return Array.from({ length: 150 }).map((_, i) => ({
                     id: i,
                     x: Math.random() * 100,
                     delay: Math.random() * 2,
-                    duration: 0.5 + Math.random() * 0.5
+                    duration: 0.4 + Math.random() * 0.4
                 }));
             });
         } else {

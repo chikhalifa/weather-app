@@ -141,7 +141,7 @@ const ForecastList = ({ data }) => {
                 7-Day Forecast
             </h3>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-4 md:gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-4 md:gap-6 auto-rows-fr">
                 {daily.time.slice(1).map((time, index) => {
                     const i = index + 1;
                     const weatherInfo = getWeatherCodeInfo(daily.weather_code[i]);
