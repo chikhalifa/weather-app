@@ -70,7 +70,7 @@ function App() {
       <Navbar isDark={isDark} toggleTheme={toggleTheme} />
       <WeatherEffects weatherCode={weatherData?.current?.weather_code} />
 
-      <main className="container mx-auto px-4 pt-24 pb-12 relative z-10 min-h-[calc(100vh-80px)] flex items-center justify-center">
+      <main className="container mx-auto px-4 pt-32 lg:pt-24 pb-12 relative z-10 min-h-[calc(100vh-80px)] flex items-center justify-center">
 
         {!location && !loading ? (
           /* Initial Landing State */
@@ -97,8 +97,8 @@ function App() {
           </div>
         ) : (
           /* Bento Grid Layout */
-          <div className="w-full max-w-7xl animate-fade-in-up">
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-min">
+          <div className="w-full max-w-7xl animate-fade-in-up pb-8">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-auto">
 
               {/* Search Bar - Spans full width on mobile, 4 cols on desktop */}
               <div className="md:col-span-12 lg:col-span-4 lg:row-span-1">
@@ -125,11 +125,11 @@ function App() {
                 </div>
               ) : weatherData && (
                 <>
-                  <div className="md:col-span-12">
+                  <div className="md:col-span-12 mb-4">
                     <RainAlert data={weatherData} />
                   </div>
 
-                  <div className="md:col-span-8 lg:col-span-8 row-span-2 relative">
+                  <div className="md:col-span-8 lg:col-span-8 md:row-span-2 relative h-auto">
                     <CurrentWeather data={weatherData} weatherInfo={weatherInfo} />
                     <WeatherCharacter weatherCode={weatherData.current.weather_code} />
                   </div>
