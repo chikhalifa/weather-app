@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { CloudRain, Loader2, Cloud, Sun, CloudSnow } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { CloudRain, Loader2, Cloud, Sun, CloudSnow, Wind, Droplets, Thermometer, Search } from 'lucide-react';
 import Navbar from './components/Navbar';
 import SearchInput from './components/SearchInput';
 import CurrentWeather from './components/CurrentWeather';
@@ -22,13 +22,15 @@ function App() {
     document.documentElement.classList.toggle('dark');
   };
 
-  if (isDark && !document.documentElement.classList.contains('dark')) {
-    document.documentElement.classList.add('dark');
-  }
+  useEffect(() => {
+    if (isDark && !document.documentElement.classList.contains('dark')) {
+      document.documentElement.classList.add('dark');
+    }
+  }, [isDark]);
 
   // Dynamic background based on weather
   const getWeatherBackground = () => {
-    if (!weatherInfo) return '';
+    if (!weatherInfo) return 'from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-800';
     const code = weatherData?.current?.weather_code;
 
     // Rainy
@@ -56,130 +58,119 @@ function App() {
   };
 
   return (
-    <div className={`min-h-screen relative overflow-hidden transition-all duration-1000 bg-gradient-to-br ${getWeatherBackground()}`}>
-      {/* Animated floating clouds */}
-      <div className="fixed inset-0 pointer-events-none opacity-8 dark:opacity-6">
-        <Cloud className="absolute top-20 left-[10%] text-white animate-drift" size={100} />
-        <Cloud className="absolute top-40 right-[15%] text-white animate-float-slow" size={80} />
-        <Cloud className="absolute bottom-40 left-[20%] text-white animate-drift" size={120} style={{ animationDelay: '2s' }} />
-        <CloudSnow className="absolute top-60 right-[30%] text-white animate-float" size={60} style={{ animationDelay: '1s' }} />
-      </div>
-
-      {/* Atmospheric gradient orbs */}
+    <div className={`min-h-screen relative overflow-x-hidden transition-all duration-1000 bg-gradient-to-br ${getWeatherBackground()} text-gray-800 dark:text-gray-100 font-sans selection:bg-pink-500/30`}>
+      {/* Background Elements */}
       <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-br from-purple-400/20 via-blue-400/15 to-transparent rounded-full blur-3xl animate-drift"></div>
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-indigo-400/20 via-blue-500/15 to-transparent rounded-full blur-3xl animate-pulse-slow"></div>
-        <div className="absolute top-1/2 left-1/2 w-[500px] h-[500px] bg-gradient-to-br from-cyan-400/15 via-blue-400/10 to-transparent rounded-full blur-3xl animate-float-slow"></div>
+        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-br from-purple-500/20 via-blue-500/10 to-transparent rounded-full blur-[100px] animate-pulse-slow"></div>
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-indigo-500/20 via-cyan-500/10 to-transparent rounded-full blur-[80px] animate-float-slow"></div>
       </div>
 
       <Navbar isDark={isDark} toggleTheme={toggleTheme} />
-
       <WeatherEffects weatherCode={weatherData?.current?.weather_code} />
 
-      <div className="container mx-auto px-4 md:px-8 pb-20 pt-32 relative z-10">
-        {/* Hero Section */}
-        <header className="max-w-5xl mx-auto mb-16 text-center">
+      <main className="container mx-auto px-4 pt-24 pb-12 relative z-10 min-h-[calc(100vh-80px)] flex items-center justify-center">
 
-          {/* Animated weather icon */}
-          <div className="relative inline-block mb-8 group cursor-pointer">
-            <div className="absolute inset-0 bg-gradient-radial from-blue-400/30 via-purple-400/20 to-transparent blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 animate-pulse-slow"></div>
-            <div className="glass-effect-light p-8 rounded-[2rem] relative transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-2xl">
-              <div className="relative">
-                <Sun className="absolute inset-0 text-yellow-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-spin-slow" size={64} />
-                <CloudRain size={64} className="text-atmosphere-500 dark:text-atmosphere-300 drop-shadow-2xl relative group-hover:opacity-0 transition-opacity duration-500" strokeWidth={1.5} />
+        {!location && !loading ? (
+          /* Initial Landing State */
+          <div className="max-w-4xl mx-auto text-center space-y-12">
+            <div className="relative inline-block">
+              <div className="absolute inset-0 bg-blue-500/30 blur-[60px] rounded-full animate-pulse-slow"></div>
+              <h1 className="relative text-7xl md:text-9xl font-display font-black tracking-tighter mb-4 bg-gradient-to-b from-white to-white/50 bg-clip-text text-transparent drop-shadow-sm">
+                Weather
+              </h1>
+              <div className="absolute -right-12 top-0 text-yellow-400 animate-spin-slow opacity-80">
+                <Sun size={80} />
+              </div>
+            </div>
+
+            <p className="text-2xl md:text-3xl font-light text-white/80 max-w-2xl mx-auto leading-relaxed">
+              Experience the atmosphere of any city with our crystal-clear forecast engine.
+            </p>
+
+            <div className="max-w-xl mx-auto transform hover:scale-105 transition-transform duration-500">
+              <div className="glass-panel p-2 rounded-2xl">
+                <SearchInput onLocationSelect={setLocation} />
               </div>
             </div>
           </div>
+        ) : (
+          /* Bento Grid Layout */
+          <div className="w-full max-w-7xl animate-fade-in-up">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-min">
 
-          {/* Animated title */}
-          <h1 className="font-display text-6xl md:text-8xl lg:text-9xl font-black mb-6 leading-none tracking-tight transform hover:scale-105 transition-transform duration-500 cursor-pointer">
-            <span className="inline-block bg-gradient-to-br from-blue-400 via-indigo-500 to-purple-600 dark:from-blue-300 dark:via-indigo-400 dark:to-purple-500 bg-clip-text text-transparent animate-shimmer bg-[length:200%_100%] drop-shadow-2xl">
-              Weather
-            </span>
-            <br />
-            <span className="inline-block text-atmosphere-600 dark:text-atmosphere-300 opacity-80 font-sans font-light text-5xl md:text-7xl lg:text-8xl mt-2 hover:opacity-100 transition-opacity">
-              Forecast
-            </span>
-          </h1>
-
-          <div className="max-w-2xl mx-auto mt-12">
-            <SearchInput onLocationSelect={setLocation} />
-          </div>
-        </header>
-
-        <main className="max-w-7xl mx-auto">
-          {/* Initial State with animated illustration */}
-          {!location && !loading && (
-            <div className="glass-effect-light p-16 rounded-[3rem] text-center max-w-2xl mx-auto transform hover:scale-[1.02] transition-all duration-500 group relative overflow-hidden">
-              {/* Animated background gradient */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-400/10 via-purple-400/10 to-pink-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-
-              <div className="relative">
-                <div className="relative inline-block mb-8">
-                  <CloudRain size={96} className="text-atmosphere-500 dark:text-atmosphere-400 opacity-70 group-hover:opacity-100 transition-all duration-500 animate-float" strokeWidth={1.5} />
-                  <div className="absolute -top-4 -right-4 w-8 h-8 bg-yellow-400 rounded-full animate-pulse-slow shadow-lg shadow-yellow-400/50"></div>
+              {/* Search Bar - Spans full width on mobile, 4 cols on desktop */}
+              <div className="md:col-span-12 lg:col-span-4 lg:row-span-1">
+                <div className="glass-card p-2 h-full flex items-center">
+                  <SearchInput onLocationSelect={setLocation} />
                 </div>
-
-                <p className="text-3xl md:text-4xl font-display font-bold text-atmosphere-700 dark:text-atmosphere-200 leading-relaxed mb-4">
-                  Discover the atmosphere<br />of any city
-                </p>
-                <p className="text-xl text-atmosphere-600 dark:text-atmosphere-300 font-light opacity-80">
-                  Start by searching above
-                </p>
               </div>
-            </div>
-          )}
 
-          {/* Loading State */}
-          {loading && (
-            <div className="flex flex-col items-center justify-center h-96 gap-6">
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-radial from-blue-400/30 via-purple-400/20 to-transparent blur-3xl animate-pulse"></div>
-                <Loader2 className="animate-spin text-atmosphere-500 dark:text-atmosphere-300 relative drop-shadow-lg" size={80} strokeWidth={1.5} />
+              {/* Status/Time or Spacer - Hidden on mobile, visible on desktop */}
+              <div className="hidden lg:block lg:col-span-8 glass-card p-6 flex flex-col justify-center">
+                <h2 className="text-2xl font-display font-bold text-white/90">
+                  {new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+                </h2>
+                <p className="text-white/60">Real-time atmospheric conditions</p>
               </div>
-              <p className="text-xl font-display font-semibold text-atmosphere-700 dark:text-atmosphere-200 animate-pulse">
-                Fetching weather data...
-              </p>
-            </div>
-          )}
 
-          {/* Error State */}
-          {error && (
-            <div className="glass-effect-light border-red-500/30 p-12 rounded-3xl text-center max-w-lg mx-auto transform hover:scale-102 transition-transform duration-300">
-              <p className="text-2xl font-display font-bold text-red-600 dark:text-red-400 mb-2">
-                Unable to retrieve weather data
-              </p>
-              <p className="text-lg text-gray-600 dark:text-gray-400">
-                Please try another location
-              </p>
-            </div>
-          )}
+              {loading ? (
+                <div className="md:col-span-12 h-96 flex items-center justify-center">
+                  <Loader2 className="animate-spin text-white" size={48} />
+                </div>
+              ) : error ? (
+                <div className="md:col-span-12 glass-panel p-8 text-center rounded-3xl text-red-400">
+                  <p className="text-xl">Unable to load weather data. Please try again.</p>
+                </div>
+              ) : weatherData && (
+                <>
+                  {/* Main Current Weather Card - Hero */}
+                  <div className="md:col-span-8 lg:col-span-8 row-span-2">
+                    <CurrentWeather data={weatherData} weatherInfo={weatherInfo} />
+                  </div>
 
-          {/* Data State */}
-          {weatherData && !loading && (
-            <div className="space-y-12 animate-fadeInUp">
-              <CurrentWeather data={weatherData} city={location} weatherInfo={weatherInfo} />
-              <ForecastList data={weatherData} />
-            </div>
-          )}
-        </main>
-      </div>
+                  {/* Detail Cards - Stacked on side */}
+                  <div className="md:col-span-4 lg:col-span-4 grid grid-cols-1 gap-6">
+                    <div className="glass-card p-6 flex items-center gap-4">
+                      <div className="p-3 bg-blue-500/20 rounded-2xl text-blue-300">
+                        <Wind size={32} />
+                      </div>
+                      <div>
+                        <p className="text-sm text-white/60 font-medium uppercase tracking-wider">Wind Speed</p>
+                        <p className="text-2xl font-bold font-display">{weatherData.current.wind_speed_10m} <span className="text-sm font-sans font-normal opacity-60">km/h</span></p>
+                      </div>
+                    </div>
 
-      <style jsx>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(40px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-fadeInUp {
-          animation: fadeInUp 0.8s ease-out;
-        }
-      `}</style>
+                    <div className="glass-card p-6 flex items-center gap-4">
+                      <div className="p-3 bg-indigo-500/20 rounded-2xl text-indigo-300">
+                        <Droplets size={32} />
+                      </div>
+                      <div>
+                        <p className="text-sm text-white/60 font-medium uppercase tracking-wider">Humidity</p>
+                        <p className="text-2xl font-bold font-display">{weatherData.current.relative_humidity_2m}%</p>
+                      </div>
+                    </div>
+
+                    <div className="glass-card p-6 flex items-center gap-4">
+                      <div className="p-3 bg-pink-500/20 rounded-2xl text-pink-300">
+                        <Thermometer size={32} />
+                      </div>
+                      <div>
+                        <p className="text-sm text-white/60 font-medium uppercase tracking-wider">Real Feel</p>
+                        <p className="text-2xl font-bold font-display">{Math.round(weatherData.current.apparent_temperature)}°</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Forecast Section - Full width bottom */}
+                  <div className="md:col-span-12 mt-4">
+                    <ForecastList data={weatherData} />
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        )}
+      </main>
     </div>
   );
 }

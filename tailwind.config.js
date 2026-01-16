@@ -13,16 +13,28 @@ export default {
             },
             colors: {
                 atmosphere: {
-                    50: '#f0f7ff',
-                    100: '#e0effe',
-                    200: '#bae0fd',
-                    300: '#7cc5fa',
-                    400: '#36a7f5',
-                    500: '#0c8ce6',
-                    600: '#0070c4',
-                    700: '#01589f',
-                    800: '#064b83',
-                    900: '#0b3d6d',
+                    50: '#f0f9ff',
+                    100: '#e0f2fe',
+                    200: '#bae6fd',
+                    300: '#7dd3fc',
+                    400: '#38bdf8',
+                    500: '#0ea5e9',
+                    600: '#0284c7',
+                    700: '#0369a1',
+                    800: '#075985',
+                    900: '#0c4a6e',
+                },
+                crystal: {
+                    50: 'rgba(255, 255, 255, 0.05)',
+                    100: 'rgba(255, 255, 255, 0.1)',
+                    200: 'rgba(255, 255, 255, 0.2)',
+                    300: 'rgba(255, 255, 255, 0.3)',
+                    400: 'rgba(255, 255, 255, 0.4)',
+                    500: 'rgba(255, 255, 255, 0.5)',
+                    600: 'rgba(255, 255, 255, 0.6)',
+                    700: 'rgba(255, 255, 255, 0.7)',
+                    800: 'rgba(255, 255, 255, 0.8)',
+                    900: 'rgba(255, 255, 255, 0.9)',
                 },
                 sunset: {
                     50: '#fff7ed',
@@ -61,13 +73,24 @@ export default {
                     '50%': { transform: 'translateX(30px) translateY(-15px)' },
                 },
                 shimmer: {
-                    '0%': { backgroundPosition: '-1000px 0' },
-                    '100%': { backgroundPosition: '1000px 0' },
+                    '0%, 100%': { transform: 'scale(1)', opacity: '0.4' },
+                    '50%': { transform: 'scale(1.2)', opacity: '0.8' },
+                },
+                'fade-in-up': {
+                    '0%': { opacity: '0', transform: 'translateY(20px)' },
+                    '100%': { opacity: '1', transform: 'translateY(0)' },
+                },
+                'slide-in-right': {
+                    '0%': { opacity: '0', transform: 'translateX(20px)' },
+                    '100%': { opacity: '1', transform: 'translateX(0)' },
                 }
             },
             backgroundImage: {
                 'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
                 'shimmer': 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)',
+            },
+            boxShadow: {
+                'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.07)',
             }
         },
     },
