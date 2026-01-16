@@ -54,7 +54,7 @@ const SearchInput = ({ onLocationSelect }) => {
                 {/* Input */}
                 <input
                     type="text"
-                    className="relative w-full glass-effect-light rounded-full py-5 md:py-6 pl-16 md:pl-20 pr-6 text-lg md:text-xl placeholder-storm-500 dark:placeholder-white/40 text-storm-800 dark:text-white font-medium focus:outline-none focus:ring-4 focus:ring-sunset-400/30 dark:focus:ring-atmosphere-400/30 transition-all duration-300 shadow-xl"
+                    className="relative w-full glass-effect-light rounded-full py-5 md:py-6 pl-16 md:pl-20 pr-6 text-lg md:text-xl placeholder-storm-500/70 dark:placeholder-white/60 text-storm-900 dark:text-white font-medium focus:outline-none focus:ring-4 focus:ring-sunset-400/30 dark:focus:ring-atmosphere-400/30 transition-all duration-300 shadow-xl bg-white/40 dark:bg-black/20 backdrop-blur-md"
                     placeholder="Search for a city..."
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}

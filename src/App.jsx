@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import SearchInput from './components/SearchInput';
 import CurrentWeather from './components/CurrentWeather';
 import ForecastList from './components/ForecastList';
+import RainAlert from './components/RainAlert';
 import { useWeather } from './hooks/useWeather';
 import { getWeatherCodeInfo } from './services/api';
 import WeatherEffects from './components/WeatherEffects';
@@ -123,6 +124,10 @@ function App() {
                 </div>
               ) : weatherData && (
                 <>
+                  <div className="md:col-span-12">
+                    <RainAlert data={weatherData} />
+                  </div>
+
                   {/* Main Current Weather Card - Hero */}
                   <div className="md:col-span-8 lg:col-span-8 row-span-2">
                     <CurrentWeather data={weatherData} weatherInfo={weatherInfo} />
