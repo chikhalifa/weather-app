@@ -3,6 +3,7 @@ import { CloudRain, Loader2, Cloud, Sun, CloudSnow, Wind, Droplets, Thermometer,
 import Navbar from './components/Navbar';
 import SearchInput from './components/SearchInput';
 import CurrentWeather from './components/CurrentWeather';
+import WeatherCharacter from './components/WeatherCharacter';
 import ForecastList from './components/ForecastList';
 import RainAlert from './components/RainAlert';
 import { useWeather } from './hooks/useWeather';
@@ -42,7 +43,7 @@ function App() {
     if ([0, 1].includes(code)) {
       return isDark
         ? 'from-blue-900 via-indigo-900 to-purple-900'
-        : 'from-sky-200 via-blue-300 to-indigo-400';
+        : 'from-slate-200 via-blue-200 to-indigo-300';
     }
     // Cloudy
     if ([2, 3].includes(code)) {
@@ -55,7 +56,7 @@ function App() {
 
     return isDark
       ? 'from-indigo-950 via-blue-950 to-slate-950'
-      : 'from-blue-50 via-indigo-50 to-purple-50';
+      : 'from-slate-100 via-indigo-100 to-purple-100';
   };
 
   return (
@@ -128,9 +129,9 @@ function App() {
                     <RainAlert data={weatherData} />
                   </div>
 
-                  {/* Main Current Weather Card - Hero */}
-                  <div className="md:col-span-8 lg:col-span-8 row-span-2">
+                  <div className="md:col-span-8 lg:col-span-8 row-span-2 relative">
                     <CurrentWeather data={weatherData} weatherInfo={weatherInfo} />
+                    <WeatherCharacter weatherCode={weatherData.current.weather_code} />
                   </div>
 
                   {/* Detail Cards - Stacked on side */}
